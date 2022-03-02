@@ -1,7 +1,7 @@
 //! Retrieve and write plugin format information
 
 use crate::prelude::*;
-use anyhow::{bail, Result};
+use anyhow::{bail, Context, Result};
 use std::{path::Path, str::FromStr};
 
 const VST3_SYMBOL: &str = "GetPluginFactory";
@@ -51,7 +51,8 @@ impl Format {
     pub fn contains_symbol<P: AsRef<Path>>(binary: P, symbol: impl AsRef<str>) -> Result<bool> {
         // Parsing the raw binary instead of relying on nm-like tools makes
         // cross compiling a bit easier
-        let bytes = std::fs::read(&binary)?;
+        let bytes = std::fs::read(&binary)
+            .context(format!("path {} does not exist", binary.as_ref().display()))?;
         match goblin::Object::parse(&bytes)? {
             goblin::Object::Elf(obj) => Ok(obj.dynsyms.iter().any(|sym| {
                 !sym.is_import()

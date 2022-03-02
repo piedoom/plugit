@@ -4,6 +4,24 @@ Plugit is a plugin bundler ~~stolen~~ largely borrowed from the code in [`nih-pl
 
 Plugit is separated into a library and a command line utility powered by clap.
 
+## Installing
+
+```
+cargo install --git https://github.com/piedoom/plugit
+```
+
+## Usage
+
+```
+ARGS:
+    <INPUT_PATH>    Optional absolute path of an input library to be bundled      
+OPTIONS:
+    -d, --debug              Optionally specify that the target compiled in debug mode    
+    -f, --format <FORMAT>    Optional output format override    
+    -h, --help               Print help information    
+    -t, --target <TARGET>    Optional bundle target override
+```
+
 ## Arguments
 
 ### Positional

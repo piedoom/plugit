@@ -17,7 +17,7 @@ struct Cli {
     #[clap(short, long, parse(try_from_str))]
     format: Option<Format>,
     /// Optionally specify that the target compiled in debug mode
-    #[clap(short, long, parse(try_from_str))]
+    #[clap(short, long)]
     debug: bool,
 }
 fn main() -> anyhow::Result<()> {
@@ -40,7 +40,7 @@ fn main() -> anyhow::Result<()> {
                     .context("Cargo.toml contains no package name")?
                     .name;
                 let package_lib_name = vst::Vst3::exported_lib_filename(package_name, None);
-                let build_folder = if cli.debug { "debug" } else { "target" };
+                let build_folder = if cli.debug { "debug" } else { "release" };
                 manifest_dir
                     .join("target")
                     .join(build_folder)
